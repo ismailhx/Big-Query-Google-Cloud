@@ -1,7 +1,0 @@
-
-
-Query 1: 
-Selects this: `bigquery-public-data.usa_names.usa_1910_current` dataset
-
-SELECT*  FROM `bigquery-public-data.usa_names.usa_1910_current` LIMIT 1000
-
