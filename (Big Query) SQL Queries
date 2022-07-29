@@ -1,0 +1,50 @@
+To make better sense of these queries please read the schema for the datasets on BigQuery.
+
+Query 1: 
+Selects this: `bigquery-public-data.usa_names.usa_1910_current` dataset
+
+SELECT*  FROM `bigquery-public-data.usa_names.usa_1910_current` LIMIT 1000
+
+
+
+Query 2: 
+Finding out for each state - how many people born in 2001 in the USA are named Ismail
+
+SELECT
+state,name,gender,year,number
+
+  FROM `bigquery-public-data.usa_names.usa_1910_2013` 
+  where name = "Ismail" and year = 2001
+  LIMIT 100
+
+
+
+Query 3:
+weather.stn AS stn_ID -
+
+Selects the stn attribute as stn_ID from the 'bigquery-public-data.noaa_gsod.gsod2015' table.
+
+
+
+ANY_VALUE(station.name) AS name -
+
+ANY_VALUE The any_value function returns any random value of the selected column. (solves error 1055) 
+
+(station.name) Return any value from the stations table’s column ‘name’  (there can be multiple stations with the same id - pick any random one)
+
+AS name - Rename the column ‘name’
+
+INNER JOIN – joins the tables on usaf and stn this finds all the tables run by the us airforce
+
+
+SELECT
+  weather.stn AS stn_ID, ANY_VALUE(station.name) AS name
+  FROM
+  `bigquery-public-data.noaa_gsod.stations` AS station
+  INNER JOIN `bigquery-public-data.noaa_gsod.gsod2015` AS weather
+  ON station.usaf = weather.stn
+WHERE
+  station.state = "WA" AND station.usaf != "999999"
+  GROUP BY stn_id
+LIMIT
+  1000
