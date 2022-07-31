@@ -34,8 +34,20 @@ ANY_VALUE The any_value function returns any random value of the selected colum
 
 AS name - Rename the column ‘name’
 
-INNER JOIN – joins the tables on usaf and stn this finds all the tables run by the us airforce
 
+
+INNER JOIN – joins the tables on usaf and stn this finds all the stations run by the us airforce
+
+
+WHERE
+  station.state = "WA" AND station.usaf != "999999"
+  GROUP BY stn_id
+  
+ - This filters the query to show only states in washington where the usaf number isnt 999999 and groups the queries by station id
+ 
+  
+  
+  
 
 SELECT
   weather.stn AS stn_ID, ANY_VALUE(station.name) AS name
