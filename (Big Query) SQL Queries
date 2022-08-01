@@ -1,4 +1,5 @@
 To make better sense of these queries please read the schema for the datasets on BigQuery.
+Below are explanations for the first few queries describing what the query is doing:
 
 Query 1: 
 Selects this: `bigquery-public-data.usa_names.usa_1910_current` dataset
@@ -26,7 +27,7 @@ Selects the stn attribute as stn_ID from the 'bigquery-public-data.noaa_gsod.gso
 
 
 
-ANY_VALUE(station.name) AS name -
+ANY_VALUE(station.name) AS name - 
 
 ANY_VALUE The any_value function returns any random value of the selected column. (solves error 1055) 
 
@@ -60,3 +61,30 @@ WHERE
   GROUP BY stn_id
 LIMIT
   1000
+
+
+
+Query 4:
+WITH - names the new table we just made with our query ‘Ts’
+
+ARRAY_AGG(STRUCT(title,score)) AS titles,- Picks all the contents from a column in an array. Take the title and score and combine them into an array.
+
+EXTRACT(DATE FROM time_ts) AS date - Extracts the date from the timestamp
+
+WHERE score IS NOT NULL AND title IS NOT NULL GROUP BY date - both fields arent null and the news articles for each date are selected
+
+SELECT date, - From Ts select the date column
+ARRAY(SELECT AS STRUCT title,score FROM UNNEST(titles) ORDER BY score DESC LIMIT 2) - Selects the created array for the unnest function and created structure with its contents. UNNEST’s the array creating a new table/array of titles ordered by score  
+
+
+WITH Ts AS (
+  SELECT
+  ARRAY_AGG(STRUCT(title,score)) AS titles,
+  EXTRACT(DATE FROM time_ts) AS date
+  FROM `bigquery-public-data.hacker_news.stories`
+  WHERE score IS NOT NULL AND title IS NOT NULL GROUP BY date
+)
+SELECT date,
+ARRAY(SELECT AS STRUCT title,score FROM UNNEST(titles) ORDER BY score DESC LIMIT 2) 
+AS TA
+FROM Ts
