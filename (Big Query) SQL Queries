@@ -88,3 +88,18 @@ SELECT date,
 ARRAY(SELECT AS STRUCT title,score FROM UNNEST(titles) ORDER BY score DESC LIMIT 2) 
 AS TA
 FROM Ts
+
+
+
+Query 5:
+WITH Names AS (
+  SELECT name, SUM (number) AS freq
+  FROM `bigquery-public-data.usa_names.usa_1910_2013`
+  GROUP BY name
+  ORDER BY freq DESC LIMIT 100) 
+  SELECT name, SUM(word_count) AS no_of_times
+  FROM Names
+  JOIN `bigquery-public-data.samples.shakespeare`
+  ON STARTS_WITH(word,name)
+  GROUP BY name 
+  ORDER BY no_of_times DESC LIMIT 10
