@@ -92,6 +92,21 @@ FROM Ts
 
 
 Query 5:
+
+WITH Names AS (
+-WITH names the new table we just made with our query Names
+
+SELECT name, SUM (number) AS freq
+FROM `bigquery-public-data.usa_names.usa_1910_2013`
+- Selects names and the number of times people are named that name as freq
+
+ SELECT name, SUM(word_count) AS no_of_times
+ FROM Names
+ JOIN `bigquery-public-data.samples.shakespeare`
+ ON STARTS_WITH(word,name)
+-Selects the names column from the Names table and the word_count (number of times the word is mentioned in the corpus) is obtained by joining Shakespeare’s dataset on the word where the word starts with the name selected.
+
+
 WITH Names AS (
   SELECT name, SUM (number) AS freq
   FROM `bigquery-public-data.usa_names.usa_1910_2013`
