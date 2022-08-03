@@ -134,10 +134,20 @@ WITH Names AS (
   
   
   Query 7:
-    WHERE (REGEXP_CONTAINS(title, r"She")) - Finds all the titles with ‘She’ in it 
+  WHERE (REGEXP_CONTAINS(title, r"She")) - Finds all the titles with ‘She’ in it 
    
   SELECT title,
   FROM `bigquery-public-data.hacker_news.stories`
   WHERE (REGEXP_CONTAINS(title, r"She"))
+  GROUP BY title
+  LIMIT 100
+
+
+  Query 8:
+  Finds titles with letters followed by an ‘ and a letter
+  
+  SELECT title,
+  FROM `bigquery-public-data.hacker_news.stories`
+  WHERE (REGEXP_CONTAINS(title, r"\w\w'\w"))
   GROUP BY title
   LIMIT 100
