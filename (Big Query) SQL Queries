@@ -118,3 +118,14 @@ WITH Names AS (
   ON STARTS_WITH(word,name)
   GROUP BY name 
   ORDER BY no_of_times DESC LIMIT 10
+  
+ Query 6:
+ WHERE title LIKE '%She%' - Finds all the titles with ‘She’ in it (this doesn’t work for lowercase - it wont find ‘she’)
+
+ 
+  SELECT title,
+  FROM `bigquery-public-data.hacker_news.stories`
+  WHERE title LIKE '%She%'
+  GROUP BY title
+  LIMIT 100
+  
