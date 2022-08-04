@@ -151,3 +151,20 @@ WITH Names AS (
   WHERE (REGEXP_CONTAINS(title, r"\w\w'\w"))
   GROUP BY title
   LIMIT 100
+
+  
+  
+  Query 9:
+  The UNION ALL command combines the result set of two or more SELECT statements (allows duplicate values). 
+  
+  WITH email_addresses AS
+  (SELECT "foo@example.com" as email
+  UNION ALL
+  SELECT "bar@example.org" as email
+  UNION ALL
+  SELECT "baz@example.net" as email)
+
+SELECT
+  REGEXP_EXTRACT(email, r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
+  AS top_level_domain
+FROM email_addresses;
