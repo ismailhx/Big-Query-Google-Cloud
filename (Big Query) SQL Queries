@@ -168,3 +168,22 @@ SELECT
   REGEXP_EXTRACT(email, r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
   AS top_level_domain
 FROM email_addresses;
+
+
+
+  
+  Query 10:
+This ranks the biggest word for the chosen play that is longer than 8 letters and is mentioned at least 12 times in the corpus 
+
+RANK() OVER(PARTITION BY corpus ORDER BY word_count DESC)Ranking -
+Ranks the play’s word, within the corpus/play. 
+Partition_by, groups/partitions the data.
+ORDER BY puts the longer words in a higher ranking than the shorter words.
+
+SELECT corpus,word,word_count,
+RANK() OVER(PARTITION BY corpus ORDER BY word_count DESC)Ranking
+FROM `publicdata.samples.shakespeare`
+WHERE length(word)> 8 AND word_count > 12 AND corpus = "2kinghenryiv"
+ORDER BY Ranking
+LIMIT 25
+  
