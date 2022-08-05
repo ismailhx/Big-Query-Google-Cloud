@@ -186,4 +186,30 @@ FROM `publicdata.samples.shakespeare`
 WHERE length(word)> 8 AND word_count > 12 AND corpus = "2kinghenryiv"
 ORDER BY Ranking
 LIMIT 25
-  
+ 
+ 
+ 
+Query 11
+This is a function that takes the values, multiplies it by 2 and then adds 1 giving only odd results.
+CREATE TEMPORARY FUNCTION - creates a temprorary function
+
+CREATE TEMPORARY FUNCTION
+odd_numbers_only(x INT64,y INT64) AS ((2*x)+y);
+WITH numbers AS
+(
+SELECT 1 as val
+UNION ALL 
+SELECT 2 as val
+UNION ALL 
+SELECT 157 as val
+UNION ALL 
+SELECT 31 as val
+UNION ALL 
+SELECT 27 as val
+UNION ALL 
+SELECT 99 as val
+UNION ALL 
+SELECT 34 as val
+)
+SELECT val,odd_numbers_only(val,1) AS odd_results
+FROM numbers
