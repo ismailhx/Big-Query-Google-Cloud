@@ -213,3 +213,28 @@ SELECT 34 as val
 )
 SELECT val,odd_numbers_only(val,1) AS odd_results
 FROM numbers
+
+
+
+Query 12
+RETURNS - returns the data type
+LANGUAGE -states the language 
+
+CREATE TEMPORARY FUNCTION
+square_and_add(x FLOAT64,y FLOAT64) 
+RETURNS FLOAT64
+LANGUAGE js AS """ return (x*x)+y;""";
+WITH numbers AS
+(
+SELECT 1 AS X, 2 as y
+UNION ALL 
+SELECT 2 AS X, 24 as y
+UNION ALL 
+SELECT 10 AS X, 5 as y
+UNION ALL 
+SELECT 1.5 AS X, 2 as y
+UNION ALL 
+SELECT 1.959 AS X, 2 as y
+)
+SELECT x,y,square_and_add(x,y) AS product
+FROM numbers
