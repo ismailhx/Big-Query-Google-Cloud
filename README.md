@@ -1,3 +1,4 @@
+2022
 This Repository represents some of the things i have learnt and my journey regarding Big Query and SQL.
 
 
