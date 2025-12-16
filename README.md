@@ -1,4 +1,4 @@
-2022
+2019-2022 Google Cloud
 This Repository represents some of the things i have learnt and my journey regarding Big Query and SQL.
 
 
